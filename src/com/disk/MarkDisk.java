@@ -3,47 +3,49 @@ package com.disk;
 import java.io.Console;
 import java.util.Scanner;
 
-
-
-public class MarkDisk{
+public class MarkDisk {
 	
 	/**
 	 * @param args
 	 */
+	
+	
 	public static void main(String args[])
 	{
 	try {
 		System.out.println("\n #### Disk BenchMark  ####\n\n");
 		float benchmark[]= new float[3];
+		String filePath=null;
 		//Environment details
 		System.out.println("Free memory (bytes): " + 
 		 Runtime.getRuntime().freeMemory());
 		 System.out.println("total memory"+Runtime.getRuntime().totalMemory());
 		
+		 
 		 //User Input
 		 MarkDisk md=new MarkDisk();
-		 String filePath= md.askUser("Enter FilePath \n");
-		 System.out.println("reading system path "+filePath);
 		 
+		 
+		 
+		 int size=0;
 		 ChannelOps cOps= new ChannelOps();
-		 
-		 String readPattern=md.askUser("Enter ReadPattern 1)Sequential 2)Random \n");
+
+		 String readPattern=md.askUser("Enter ReadPattern 1)SequentialRead 2)RandomRead 3)Sequential Read \n");
 		 
 		 switch(readPattern)
 		 {
-		 case "1":benchmark=cOps.squentialOps(filePath); 
+		 case "1":	filePath= md.askUser("Enter FilePath \n");
+		 			System.out.println("reading system path "+filePath);
+		 			benchmark=cOps.squentialOps(filePath,2);
+		 			
 		 			break;
-		 case "2":cOps.randomOps(filePath);
-		 			break;
+		 case "2":	filePath= md.askUser("Enter FilePath \n");		 
+		 			System.out.println("reading system path "+filePath);
+		 			cOps.randomOps(filePath,2);
+		 			break;		
+		 case "3":	benchmark=cOps.writeOps();break;
 		 default : System.out.println("\t NO option selected \n\n");
 		 		System.exit(0);break;
-		 }
-		 
-		 System.out.println("\t 1000byte   \t 1kbyte \t 1mbyte");
-		 for(int i=0;i<benchmark.length;i++)
-		 {
-			 System.out.print("\t\t "+benchmark[i]);
-			 
 		 }
 		
 	} catch (Exception e) {
